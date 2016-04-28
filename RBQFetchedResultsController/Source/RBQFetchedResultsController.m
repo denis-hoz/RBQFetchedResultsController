@@ -650,10 +650,10 @@ static void * RBQArrayFetchRequestContext = &RBQArrayFetchRequestContext;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"firstObjectIndex <= %@ AND lastObjectIndex >= %@", index, index];
             RLMResults *sections = [RBQSectionCacheObject objectsInRealm:cacheRealm withPredicate:predicate];
             RBQSectionCacheObject *section = sections.firstObject;
-			NSUInteger row = index.unsignedIntegerValue;
-			if (self.sectionNameKeyPath) {
-				row -= section.firstObjectIndex;
-			}
+            NSUInteger row = index.unsignedIntegerValue;
+            if (self.sectionNameKeyPath) {
+                row -= section.firstObjectIndex;
+            }
             RBQObjectCacheObject *objectCache = [section.objects objectAtIndex:row];
             safeObject = [[RBQSafeRealmObject alloc] initWithClassName:objectCache.className
                                                        primaryKeyValue:objectCache.primaryKeyValue
