@@ -106,6 +106,34 @@ public protocol FetchedResultsControllerDelegate: class {
     :param: controller controller instance that noticed the change on its fetched objects
     */
     func controllerDidChangeContent<T: Object>(controller: FetchedResultsController<T>)
+
+    /**
+    This method is called before the controller performs the fetch.
+
+     :param: controller controller instance that will perform the fetch
+     */
+    func controllerWillPerformFetch<T: Object>(controller: FetchedResultsController<T>)
+
+    /**
+    This method is called after the controller successfully fetches objects. It will not be called if the fetchRequest is nil.
+
+    :param: controller controller instance that performed the fetch
+    */
+    func controllerDidPerformFetch<T: Object>(controller: FetchedResultsController<T>)
+}
+
+/**
+ Default implementation of the optional methods in FetchedResultsControllerDelegate
+ 
+ Conforming class only has to implement these if it wants to override
+ 
+ :nodoc:
+ */
+public extension FetchedResultsControllerDelegate {
+    // NOOP
+    func controllerWillPerformFetch<T: Object>(controller: FetchedResultsController<T>) {}
+    // NOOP
+    func controllerDidPerformFetch<T: Object>(controller: FetchedResultsController<T>) {}
 }
 
 /**
@@ -383,6 +411,21 @@ extension FetchedResultsController: DelegateProxyProtocol {
             delegate.controllerDidChangeContent(self)
         }
     }
+
+    func controllerWillPerformFetch(controller: RBQFetchedResultsController!) {
+        if let delegate = self.delegate {
+            delegate.controllerWillPerformFetch(self)
+        }
+
+    }
+
+    func controllerDidPerformFetch(controller: RBQFetchedResultsController!) {
+        if let delegate = self.delegate {
+
+            delegate.controllerDidPerformFetch(self)
+        }
+
+    }
 }
 
 // Internal Proxy To Manage Converting The Objc Delegate
@@ -394,6 +437,10 @@ internal protocol DelegateProxyProtocol: class {
     func controller(controller: RBQFetchedResultsController!, didChangeSection section: RBQFetchedResultsSectionInfo!, atIndex sectionIndex: UInt, forChangeType type: NSFetchedResultsChangeType)
     
     func controllerDidChangeContent(controller: RBQFetchedResultsController!)
+
+    func controllerWillPerformFetch(controller: RBQFetchedResultsController!)
+
+    func controllerDidPerformFetch(controller: RBQFetchedResultsController!)
 }
 
 // Internal Proxy To Manage Converting The Objc Delegate
@@ -423,4 +470,13 @@ internal class DelegateProxy: NSObject, RBQFetchedResultsControllerDelegate {
     @objc func controllerDidChangeContent(controller: RBQFetchedResultsController) {
         self.delegate?.controllerDidChangeContent(controller)
     }
+
+    @objc func controllerWillPerformFetch(controller: RBQFetchedResultsController) {
+        self.delegate?.controllerWillPerformFetch(controller)
+    }
+
+    @objc func controllerDidPerformFetch(controller: RBQFetchedResultsController) {
+        self.delegate?.controllerDidPerformFetch(controller)
+    }
+
 }

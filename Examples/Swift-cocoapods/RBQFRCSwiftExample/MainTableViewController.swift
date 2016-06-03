@@ -295,4 +295,5 @@ extension MainTableViewController: FetchedResultsControllerDelegate {
     func controllerDidChangeContent<T : Object>(controller: FetchedResultsController<T>) {
         self.tableView.endUpdates()
     }
+
 }
