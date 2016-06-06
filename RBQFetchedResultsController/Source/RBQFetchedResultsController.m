@@ -655,7 +655,7 @@ static void * RBQArrayFetchRequestContext = &RBQArrayFetchRequestContext;
             safeObject = [RBQSafeRealmObject safeObjectFromObject:object];
         }
         else {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"firstObjectIndex <= %@ AND lastObjectIndex >= %@", index, index];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"firstObjectIndex <= %@ AND lastObjectIndex >= %@ AND objects.@count > 0", index, index];
             RLMResults *sections = [RBQSectionCacheObject objectsInRealm:cacheRealm withPredicate:predicate];
             RBQSectionCacheObject *section = sections.firstObject;
             NSUInteger row = index.unsignedIntegerValue;
