@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Roobiq. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "RBQFetchRequest.h"
-#import "RBQSafeRealmObject.h"
+#import <RBQSafeRealmObject/RBQSafeRealmObject.h>
+#import <Foundation/Foundation.h>
 
 @import CoreData;
 
@@ -121,6 +121,8 @@
  *  The class is used to monitor changes from a RBQRealmNotificationManager to convert these changes into specific index path or section index changes. Typically this is used to back a UITableView and support animations when items are inserted, deleted, or changed.
  */
 @interface RBQFetchedResultsController : NSObject
+
+@property (nonatomic) bool logging;
 
 /**
  *  The fetch request for the controller
