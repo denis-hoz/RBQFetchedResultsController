@@ -687,8 +687,6 @@ static void * RBQArrayFetchRequestContext = &RBQArrayFetchRequestContext;
     // Setup run loop
     if (!self.notificationRunLoop) {
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        if (![NSThread isMainThread]) {
-            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 CFRunLoopPerformBlock(CFRunLoopGetCurrent(), kCFRunLoopDefaultMode, ^{
                     weakSelf.notificationRunLoop = [NSRunLoop currentRunLoop];
@@ -698,12 +696,6 @@ static void * RBQArrayFetchRequestContext = &RBQArrayFetchRequestContext;
                 
                 CFRunLoopRun();
             });
-            
-        } else {
-            weakSelf.notificationRunLoop = [NSRunLoop currentRunLoop];
-            dispatch_semaphore_signal(sem);
-        }
-        
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     }
     
