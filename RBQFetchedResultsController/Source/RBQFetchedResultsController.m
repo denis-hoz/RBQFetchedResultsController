@@ -920,14 +920,33 @@ static void * RBQArrayFetchRequestContext = &RBQArrayFetchRequestContext;
                 RBQSectionCacheObject *section =
                 [RBQSectionCacheObject objectInRealm:state.cacheRealm
                                        forPrimaryKey:objectChange.updatedCacheObject.sectionKeyPathValue];
-                NSInteger insertIndex = objectChange.updatedIndexpath.row;
-                if (insertIndex >= section.objects.count) {
-                    insertIndex = section.objects.count - 1;
-                }
+                
+#ifdef DEBUG
+                NSAssert(objectChange.updatedIndexpath.row <= section.objects.count, @"Attemting to insert at index beyond bounds!");
+#endif
                 [section.objects insertObject:objectChange.updatedCacheObject
-                                      atIndex:insertIndex];
+                                      atIndex:objectChange.updatedIndexpath.row];
                 
                 objectChange.updatedCacheObject.section = section;
+                //fix section bug
+//                // Insert the object
+//                [state.cacheRealm addObject:objectChange.updatedCacheObject];
+//                
+//                // Add the object to the objects array and not just to the Realm!
+//                [state.cache.objects addObject:objectChange.updatedCacheObject];
+//                
+//                // Get the section and add it to it
+//                RBQSectionCacheObject *section =
+//                [RBQSectionCacheObject objectInRealm:state.cacheRealm
+//                                       forPrimaryKey:objectChange.updatedCacheObject.sectionKeyPathValue];
+//                NSInteger insertIndex = objectChange.updatedIndexpath.row;
+//                if (insertIndex >= section.objects.count) {
+//                    insertIndex = section.objects.count - 1;
+//                }
+//                [section.objects insertObject:objectChange.updatedCacheObject
+//                                      atIndex:insertIndex];
+//                
+//                objectChange.updatedCacheObject.section = section;
             }
             else if (objectChange.changeType == NSFetchedResultsChangeMove) {
                 // Delete to remove it from previous section
