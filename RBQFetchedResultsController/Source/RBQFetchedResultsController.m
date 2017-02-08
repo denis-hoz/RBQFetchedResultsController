@@ -920,12 +920,12 @@ static void * RBQArrayFetchRequestContext = &RBQArrayFetchRequestContext;
                 RBQSectionCacheObject *section =
                 [RBQSectionCacheObject objectInRealm:state.cacheRealm
                                        forPrimaryKey:objectChange.updatedCacheObject.sectionKeyPathValue];
-                
-#ifdef DEBUG
-                NSAssert(objectChange.updatedIndexpath.row <= section.objects.count, @"Attemting to insert at index beyond bounds!");
-#endif
+                NSInteger insertIndex = objectChange.updatedIndexpath.row;
+                if (insertIndex >= section.objects.count) {
+                    insertIndex = section.objects.count - 1;
+                }
                 [section.objects insertObject:objectChange.updatedCacheObject
-                                      atIndex:objectChange.updatedIndexpath.row];
+                                      atIndex:insertIndex];
                 
                 objectChange.updatedCacheObject.section = section;
             }
