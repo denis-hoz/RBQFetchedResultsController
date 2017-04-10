@@ -290,4 +290,6 @@
         sectionNameKeyPath:(nullable NSString *)sectionNameKeyPath
             andPerformFetch:(BOOL)performFetch;
 
+- (void)unregisterChangeNotifications;
+
 @end
