@@ -1,4 +1,9 @@
 RBQFetchedResultsController
+
+NOTE: Fork of [RBQFetchedResultsController](https://github.com/Roobiq/RBQFetchedResultsController)
+
+I've just fixed compilation error with Realm.
+
 ===========================
 [![CocoaPods](https://img.shields.io/cocoapods/v/RBQFetchedResultsController.svg)]()
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
