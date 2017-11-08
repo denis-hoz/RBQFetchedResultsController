@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "RBQFetchedResultsControllerX"
+  s.name         = "RBQFetchedResultsController"
   s.version      = "5.0.4"
   s.summary      = "Drop-in replacement for NSFetchedResultsController backed by Realm. (Fork of RBQFetchedResultsController)"
   s.description  = <<-DESC
